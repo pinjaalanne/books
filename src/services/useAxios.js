@@ -4,7 +4,7 @@ import axios from 'axios';
 // a separate custom hook for using axios in different components
 const useAxios = (baseUrl) => {
   // states for data, alert and loading
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [alert, setAlert] = useState({ show: false, message: '', type: '' });
   const [loading, setLoading] = useState(false);
 
