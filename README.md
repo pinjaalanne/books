@@ -30,3 +30,4 @@
      - **Task**: Set up a new route and navigation links for the `SinglePage` component.
    - **6.2. User Story (Styling Consistency)**: As a user, I expect the SinglePage component to have a consistent look and feel with the rest of the application for a seamless experience.
      - **Task**: Use Material-UI for designing the `SinglePage` component, ensuring it aligns with the existing style of the application.
+# books-project
