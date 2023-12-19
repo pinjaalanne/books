@@ -7,6 +7,7 @@ import Books from './routes/Books';
 import Book from './routes/Book';
 import AddBook from './routes/AddBook';
 
+// Creating a theme for the page
 const theme = createTheme({
   palette: {
     primary: {
@@ -19,6 +20,7 @@ const theme = createTheme({
 });
 
 function App() {
+  // Creating a router to navigate between routes/pages
   const router = createBrowserRouter([
     {
       path: '/',
@@ -32,6 +34,8 @@ function App() {
   ]);
 
   return (
+    // MUI component enabling date and time localization
+    // AdapterDay is for formatting date and time
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ThemeProvider theme={theme}>
         <RouterProvider router={router}></RouterProvider>
