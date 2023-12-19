@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useAxios from '../services/useAxios';
 import {
   Box,
@@ -11,12 +11,14 @@ import {
   Rating,
   Chip,
   Typography,
+  TextField
 } from '@mui/material';
+import { Login } from '@mui/icons-material';
 
 function Books() {
   const booksUrl = 'http://localhost:3000';
   const { data, get, loading } = useAxios(booksUrl);
-
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     if (data.length === 0) {
@@ -29,9 +31,14 @@ function Books() {
     get('books')
   }
 
+  const searchHandler = (e) => {
+    setSearch(e.target.value.toLowerCase());
+  }
+
   // TODO: Implement search functionality
   return (
     <Box sx={{ mx: 'auto', p: 2 }}>
+      <TextField id='outlined-basic' label='Search a book' variant='outlined' onChange={searchHandler}></TextField>
       {loading && <CircularProgress />}
       {!loading && (
         <div>
@@ -42,54 +49,57 @@ function Books() {
             useFlexGap
             flexWrap="wrap"
           >
-            {data.map((book) => (
-              <Card
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '15%',
-                  minWidth: 200,
-                }}
-                key={book.name}
-              >
-                <CardMedia
-                  sx={{ height: 250 }}
-                  image={book.img}
-                  title={book.name}
-                />
-                <Box sx={{ pt: 2, pl: 2 }}>
-                  {book.genres.map((genre, i) => (
-                    <Chip
-                      key={i}
-                      label={genre}
-                      variant="outlined"
+            {data
+              .filter((book) =>
+                book.name.toLowerCase().includes(search.toLowerCase()))
+              .map((book) => (
+                <Card
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '15%',
+                    minWidth: 200,
+                  }}
+                  key={book.name}
+                >
+                  <CardMedia
+                    sx={{ height: 250 }}
+                    image={book.img}
+                    title={book.name}
+                  />
+                  <Box sx={{ pt: 2, pl: 2 }}>
+                    {book.genres.map((genre, i) => (
+                      <Chip
+                        key={i}
+                        label={genre}
+                        variant="outlined"
+                        size="small"
+                      />
+                    ))}
+                    <Typography variant="h6" component="h2" sx={{ mt: 2 }}>
+                      {book.name}
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                      {book.author}
+                    </Typography>
+                  </Box>
+                  <CardActions
+                    sx={{
+                      justifyContent: 'space-between',
+                      mt: 'auto',
+                      pl: 2,
+                    }}
+                  >
+                    <Rating
+                      name="read-only"
+                      value={book.stars}
+                      readOnly
                       size="small"
                     />
-                  ))}
-                  <Typography variant="h6" component="h2" sx={{ mt: 2 }}>
-                    {book.name}
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom>
-                    {book.author}
-                  </Typography>
-                </Box>
-                <CardActions
-                  sx={{
-                    justifyContent: 'space-between',
-                    mt: 'auto',
-                    pl: 2,
-                  }}
-                >
-                  <Rating
-                    name="read-only"
-                    value={book.stars}
-                    readOnly
-                    size="small"
-                  />
-                  <Button size="small">Learn More</Button>
-                </CardActions>
-              </Card>
-            ))}
+                    <Button size="small">Learn More</Button>
+                  </CardActions>
+                </Card>
+              ))}
           </Stack>
         </div>
       )}
