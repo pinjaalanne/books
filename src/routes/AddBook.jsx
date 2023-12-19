@@ -13,8 +13,10 @@ import useAxios from '../services/useAxios';
 import { bookGenres } from '../genres';
 import { Stack, Typography } from '@mui/material';
 
+// function for adding a book with post method 
 function AddBook() {
   const { alert, post } = useAxios('http://localhost:3001');
+  // state for rating the book
   const [rateValue, setRateValue] = useState(3);
   const [book, setBook] = useState({
     author: '',
@@ -26,6 +28,8 @@ function AddBook() {
     stars: null,
   });
 
+  // function for selecting the genres
+  // if value is string, add a comma between
   const genreChangeHandler = (event) => {
     const { value } = event.target;
     setBook({
@@ -34,6 +38,7 @@ function AddBook() {
     });
   };
 
+  // function for changing the stars
   const rateChangeHandler = (event) => {
     const { value } = event.target;
     setBook({
@@ -42,6 +47,8 @@ function AddBook() {
     });
   };
 
+  // function for adding the book
+  // if completed formControlLabel name will be completed and checkbox checked
   const addBookHandler = (e) => {
     const { name, value, checked, type } = e.target;
     if (type === 'checkbox' && name === 'completed') {
@@ -51,6 +58,7 @@ function AddBook() {
     }
   };
 
+  // function for posting the book
   function postHandler() {
     post('books', book);
   }
