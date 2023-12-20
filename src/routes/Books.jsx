@@ -13,7 +13,8 @@ import {
   Typography,
   TextField
 } from '@mui/material';
-import { Login } from '@mui/icons-material';
+import { Link } from 'react-router-dom'
+// import { Login } from '@mui/icons-material';
 
 function Books() {
   const booksUrl = 'http://localhost:3000';
@@ -28,17 +29,17 @@ function Books() {
 
   // TODO: Replace axios with useAxios hook
   function getBooks() {
-    get('books')
+    get(`books`)
   }
 
   const searchHandler = (e) => {
     setSearch(e.target.value.toLowerCase());
   }
-
+  console.log(data);
   // TODO: Implement search functionality
   return (
     <Box sx={{ mx: 'auto', p: 2 }}>
-      <TextField id='outlined-basic' label='Search a book' variant='outlined' onChange={searchHandler}></TextField>
+      <TextField id='outlined-basic' label='Search a book' variant='outlined' value={search} onChange={searchHandler}></TextField>
       {loading && <CircularProgress />}
       {!loading && (
         <div>
@@ -51,7 +52,8 @@ function Books() {
           >
             {data
               .filter((book) =>
-                book.name.toLowerCase().includes(search.toLowerCase()))
+                book.name.toLowerCase().includes(search.toLowerCase()) ||
+                book.author.toLowerCase().includes(search.toLowerCase()))
               .map((book) => (
                 <Card
                   sx={{
@@ -96,7 +98,7 @@ function Books() {
                       readOnly
                       size="small"
                     />
-                    <Button size="small">Learn More</Button>
+                    <Button size="small" component={Link} to={`/${book.id}`}>Learn More</Button>
                   </CardActions>
                 </Card>
               ))}
