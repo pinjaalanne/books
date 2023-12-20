@@ -1,12 +1,14 @@
 import useAxios from '../services/useAxios';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import {
     Rating,
     Chip,
     Typography,
     Box,
-    Avatar
+    Avatar,
+    Button
 } from '@mui/material';
 
 function Book() {
@@ -57,6 +59,11 @@ function Book() {
                     readOnly
                     size="small"
                 />
+                <Box>
+                    <Button sx={{ mt: 0.7 }} color="inherit" variant="text" component={Link} to="/">
+                        Go Back
+                    </Button>
+                </Box>
             </Box>
         </Box>);
 }
