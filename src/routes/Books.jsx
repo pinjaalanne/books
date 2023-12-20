@@ -13,7 +13,7 @@ import {
   Typography,
   TextField
 } from '@mui/material';
-import { Login } from '@mui/icons-material';
+import { Link } from 'react-router-dom'
 
 function Books() {
   const booksUrl = 'http://localhost:3000';
@@ -28,7 +28,7 @@ function Books() {
 
   // TODO: Replace axios with useAxios hook
   function getBooks() {
-    get('books')
+    get(`books`)
   }
 
   const searchHandler = (e) => {
@@ -38,7 +38,12 @@ function Books() {
   // TODO: Implement search functionality
   return (
     <Box sx={{ mx: 'auto', p: 2 }}>
-      <TextField id='outlined-basic' label='Search a book' variant='outlined' onChange={searchHandler}></TextField>
+      <TextField sx={{ mb: 3, width: "100%" }}
+        id='outlined-basic'
+        label='Search a book'
+        variant='outlined'
+        value={search}
+        onChange={searchHandler}></TextField>
       {loading && <CircularProgress />}
       {!loading && (
         <div>
@@ -51,7 +56,8 @@ function Books() {
           >
             {data
               .filter((book) =>
-                book.name.toLowerCase().includes(search.toLowerCase()))
+                book.name.toLowerCase().includes(search.toLowerCase()) ||
+                book.author.toLowerCase().includes(search.toLowerCase()))
               .map((book) => (
                 <Card
                   sx={{
@@ -63,9 +69,10 @@ function Books() {
                   key={book.name}
                 >
                   <CardMedia
-                    sx={{ height: 250 }}
+                    sx={{ height: 320, width: 210 }}
                     image={book.img}
                     title={book.name}
+                    component='img'
                   />
                   <Box sx={{ pt: 2, pl: 2 }}>
                     {book.genres.map((genre, i) => (
@@ -92,11 +99,11 @@ function Books() {
                   >
                     <Rating
                       name="read-only"
-                      value={book.stars}
+                      value={Number(book.stars)}
                       readOnly
                       size="small"
                     />
-                    <Button size="small">Learn More</Button>
+                    <Button size="small" component={Link} to={`/${book.id}`}>Learn More</Button>
                   </CardActions>
                 </Card>
               ))}

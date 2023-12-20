@@ -12,10 +12,11 @@ import { DateField } from '@mui/x-date-pickers/DateField';
 import useAxios from '../services/useAxios';
 import { bookGenres } from '../genres';
 import { Stack, Typography } from '@mui/material';
+// import { KeyboardDoubleArrowLeftRounded } from '@mui/icons-material';
 
 // function for adding a book with post method 
 function AddBook() {
-  const { alert, post } = useAxios('http://localhost:3001');
+  const { alert, post } = useAxios('http://localhost:3000');
   // state for rating the book
   const [rateValue, setRateValue] = useState(3);
   const [book, setBook] = useState({
@@ -26,8 +27,10 @@ function AddBook() {
     start: null,
     end: null,
     stars: null,
+    img: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61pX0NiXdvL._AC_.jpg"
   });
 
+  console.log(book.img);
   // function for selecting the genres
   // if value is string, add a comma between
   const genreChangeHandler = (event) => {
@@ -58,11 +61,10 @@ function AddBook() {
     }
   };
 
-
   // function for posting the book
   function postHandler(event) {
-    post('books', book);
     event.preventDefault();
+    post('books', book);
   }
 
   return (

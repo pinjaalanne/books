@@ -21,7 +21,6 @@ function Header() {
                             Books
                         </Typography>
                     </Typography>
-
                     <Button color="inherit" variant="text" component={Link} to="/">
                         Home
                     </Button>
