@@ -14,7 +14,6 @@ import {
   TextField
 } from '@mui/material';
 import { Link } from 'react-router-dom'
-// import { Login } from '@mui/icons-material';
 
 function Books() {
   const booksUrl = 'http://localhost:3000';
@@ -35,11 +34,16 @@ function Books() {
   const searchHandler = (e) => {
     setSearch(e.target.value.toLowerCase());
   }
-  console.log(data);
+
   // TODO: Implement search functionality
   return (
     <Box sx={{ mx: 'auto', p: 2 }}>
-      <TextField id='outlined-basic' label='Search a book' variant='outlined' value={search} onChange={searchHandler}></TextField>
+      <TextField sx={{ mb: 3, width: "100%" }}
+        id='outlined-basic'
+        label='Search a book'
+        variant='outlined'
+        value={search}
+        onChange={searchHandler}></TextField>
       {loading && <CircularProgress />}
       {!loading && (
         <div>
@@ -68,6 +72,7 @@ function Books() {
                     sx={{ height: 250 }}
                     image={book.img}
                     title={book.name}
+                    component='img'
                   />
                   <Box sx={{ pt: 2, pl: 2 }}>
                     {book.genres.map((genre, i) => (
@@ -94,7 +99,7 @@ function Books() {
                   >
                     <Rating
                       name="read-only"
-                      value={book.stars}
+                      value={Number(book.stars)}
                       readOnly
                       size="small"
                     />

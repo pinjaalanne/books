@@ -4,9 +4,10 @@ import { useEffect } from 'react'
 import {
     Rating,
     Chip,
-    Typography
+    Typography,
+    Box,
+    Avatar
 } from '@mui/material';
-
 
 function Book() {
     const params = useParams()
@@ -27,30 +28,37 @@ function Book() {
     }
 
     return (
-        <div>
-            <Typography variant="h6" component="h2" sx={{ mt: 2 }}>
+        <Box>
+            <Typography variant="h6" component="h2" sx={{ pl: 2, mt: 2, mb: 1.5 }}>
                 {data.name}
             </Typography>
-            <img src={data.img}></img>
-            <Typography variant="subtitle1" gutterBottom>
+            <Avatar variant={"rounded"} alt="The image" src={data.img} style={{
+                width: 250,
+                height: 400,
+            }} sx={{ ml: 1.5 }} />
+            <Typography variant="subtitle1" gutterBottom sx={{ pt: 2, pl: 1.5 }}>
                 {data.author}
             </Typography>
-            {data.genres.map((genre, i) => (
-                <Chip
-                    key={i}
-                    label={genre}
-                    variant="outlined"
+            <Box sx={{ pt: 1, pl: 1.5 }}
+            >
+                {data.genres?.map((genre, i) => (
+                    <Chip
+                        key={i}
+                        label={genre}
+                        variant="outlined"
+                        size="small"
+                    />
+                ))}
+            </Box>
+            <Box sx={{ pt: 2, pl: 1.5 }}>
+                <Rating
+                    name="read-only"
+                    value={data.stars ?? null}
+                    readOnly
                     size="small"
                 />
-            ))}
-            <p>{data.genres}</p>
-            <Rating
-                name="read-only"
-                value={data.stars}
-                readOnly
-                size="small"
-            />
-        </div>);
+            </Box>
+        </Box>);
 }
 
 export default Book;
