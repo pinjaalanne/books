@@ -69,7 +69,7 @@ function Books() {
                   key={book.name}
                 >
                   <CardMedia
-                    sx={{ height: 250 }}
+                    sx={{ height: 320, width: 210 }}
                     image={book.img}
                     title={book.name}
                     component='img'
